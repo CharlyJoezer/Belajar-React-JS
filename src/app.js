@@ -9,6 +9,7 @@ const root = ReactDOM.createRoot(container)
 
 function App(){
     const [news, setNews] = React.useState([])
+    const [loading, setLoading] = React.useState(true)
     React.useEffect(function(){
         async function getData(){
             const request = await fetch('https://api.spaceflightnewsapi.net/v3/blogs')
@@ -16,6 +17,7 @@ function App(){
             const response = await request.json();
 
             setNews(response)
+            setLoading(false)
         }
         
         getData();
@@ -23,11 +25,16 @@ function App(){
     return (
     <>
         <h1>Data Fetch</h1>
-        <ul>
-            {news.map(function(item){
-                return <li key={item.id}>{item.title}</li>
-            })}
-        </ul>
+        {loading ? 'Loading Data' 
+        :  (
+                <ul>
+                    {news.map(function(item){
+                        return <li key={item.id}>{item.title}</li>
+                    })}
+                </ul>
+            )
+        }
+        
     </>
     )
 }
