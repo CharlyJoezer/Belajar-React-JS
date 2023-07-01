@@ -20,6 +20,12 @@ function App() {
     }]);
     setActivity('');
   }
+  function removeTodoHandler(todoId) {
+    const filterTodos = todos.filter(function (todo) {
+      return todo.id != todoId;
+    });
+    setTodos(filterTodos);
+  }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Simple Todo List"), /*#__PURE__*/React.createElement("form", {
     onSubmit: eventTodoHandler
   }, /*#__PURE__*/React.createElement("input", {
@@ -32,7 +38,9 @@ function App() {
   }), /*#__PURE__*/React.createElement("button", null, "Tambah")), /*#__PURE__*/React.createElement("ul", null, todos.map(function (todo) {
     return /*#__PURE__*/React.createElement("li", {
       key: todo.id
-    }, todo.activity);
+    }, todo.activity, /*#__PURE__*/React.createElement("button", {
+      onClick: removeTodoHandler.bind(this, todo.id)
+    }, "Hapus"));
   })));
 }
 root.render( /*#__PURE__*/React.createElement(App, null));
