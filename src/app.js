@@ -10,10 +10,18 @@ const root = ReactDOM.createRoot(container)
 function App(){
     const [activity, setActivity] = React.useState('')
     const [todos, setTodos] = React.useState([])
+
+    function generateId(){
+        return Date.now()
+    }
+
     function eventTodoHandler(event){
         event.preventDefault()
 
-        setTodos([... todos, activity])
+        setTodos([... todos, {
+            id : generateId(),
+            activity : activity
+        }])
         setActivity('')
     }
     return (
@@ -27,7 +35,7 @@ function App(){
             </form>
             <ul>
                 {todos.map(function(todo){
-                    return <li key={todo}>{todo}</li>
+                    return <li key={todo.id}>{todo.activity}</li>
                 })}
             </ul>
         </>

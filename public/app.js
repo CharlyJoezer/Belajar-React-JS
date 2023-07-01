@@ -9,9 +9,15 @@ const root = ReactDOM.createRoot(container);
 function App() {
   const [activity, setActivity] = React.useState('');
   const [todos, setTodos] = React.useState([]);
+  function generateId() {
+    return Date.now();
+  }
   function eventTodoHandler(event) {
     event.preventDefault();
-    setTodos([...todos, activity]);
+    setTodos([...todos, {
+      id: generateId(),
+      activity: activity
+    }]);
     setActivity('');
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Simple Todo List"), /*#__PURE__*/React.createElement("form", {
@@ -25,8 +31,8 @@ function App() {
     }
   }), /*#__PURE__*/React.createElement("button", null, "Tambah")), /*#__PURE__*/React.createElement("ul", null, todos.map(function (todo) {
     return /*#__PURE__*/React.createElement("li", {
-      key: todo
-    }, todo);
+      key: todo.id
+    }, todo.activity);
   })));
 }
 root.render( /*#__PURE__*/React.createElement(App, null));
