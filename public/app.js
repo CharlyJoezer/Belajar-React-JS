@@ -7,21 +7,26 @@
 const container = document.querySelector('#root');
 const root = ReactDOM.createRoot(container);
 function App() {
-  const [news, setNews] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  React.useEffect(function () {
-    async function getData() {
-      const request = await fetch('https://api.spaceflightnewsapi.net/v3/blogs');
-      const response = await request.json();
-      setNews(response);
-      setLoading(false);
+  const [activity, setActivity] = React.useState('');
+  const [todos, setTodos] = React.useState([]);
+  function eventTodoHandler(event) {
+    event.preventDefault();
+    setTodos([...todos, activity]);
+    setActivity('');
+  }
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Simple Todo List"), /*#__PURE__*/React.createElement("form", {
+    onSubmit: eventTodoHandler
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: activity,
+    placholder: "Aktifitas",
+    onChange: function (event) {
+      setActivity(event.target.value);
     }
-    getData();
-  }, []);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Data Fetch"), loading ? 'Loading Data' : /*#__PURE__*/React.createElement("ul", null, news.map(function (item) {
+  }), /*#__PURE__*/React.createElement("button", null, "Tambah")), /*#__PURE__*/React.createElement("ul", null, todos.map(function (todo) {
     return /*#__PURE__*/React.createElement("li", {
-      key: item.id
-    }, item.title);
+      key: todo
+    }, todo);
   })));
 }
 root.render( /*#__PURE__*/React.createElement(App, null));
